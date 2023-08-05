@@ -1,6 +1,6 @@
 # Arduino Core for Adafruit Bluefruit nRF52 Boards
-Issues:
-https://forum.arduino.cc/t/upgrading-issue-runtimeerror-click-will-abort-further-execution-because-python-3-was-configured-to-use-ascii-as-encoding-for-the-environment/1078618
+## Issues:
+1. https://forum.arduino.cc/t/upgrading-issue-runtimeerror-click-will-abort-further-execution-because-python-3-was-configured-to-use-ascii-as-encoding-for-the-environment/1078618
 
 [![Build Status](https://github.com/adafruit/Adafruit_nRF52_Arduino/workflows/Build/badge.svg)](https://github.com/adafruit/Adafruit_nRF52_Arduino/actions)
 
