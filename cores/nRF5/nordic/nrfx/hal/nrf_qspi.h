@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 - 2020, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -45,34 +45,6 @@ extern "C" {
  * @brief   Hardware access layer for managing the QSPI peripheral.
  */
 
-#if defined(QSPI_XIPEN_XIPEN_Msk) || defined(__NRFX_DOXYGEN__)
-/** @brief Symbol indicating whether XIP can be explicitly enabled or disabled via XIPEN register. */
-#define NRF_QSPI_HAS_XIPEN 1
-#else
-#define NRF_QSPI_HAS_XIPEN 0
-#endif
-
-#if defined(QSPI_XIP_ENC_ENABLE_ENABLE_Msk) || defined(__NRFX_DOXYGEN__)
-/** @brief Symbol indicating whether encryption for XIP is present. */
-#define NRF_QSPI_HAS_XIP_ENC 1
-#else
-#define NRF_QSPI_HAS_XIP_ENC 0
-#endif
-
-#if defined(QSPI_DMA_ENC_ENABLE_ENABLE_Msk) || defined(__NRFX_DOXYGEN__)
-/** @brief Symbol indicating whether encryption for EasyDMA is present. */
-#define NRF_QSPI_HAS_DMA_ENC 1
-#else
-#define NRF_QSPI_HAS_DMA_ENC 0
-#endif
-
-#if defined(NRF53_SERIES) || defined(__NRFX_DOXYGEN__)
-/** @brief Value representing QSPI base clock frequency. */
-#define NRF_QSPI_BASE_CLOCK_FREQ 96000000uL
-#else
-#define NRF_QSPI_BASE_CLOCK_FREQ 32000000uL
-#endif
-
 /**
  * @brief This value can be used as a parameter for the @ref nrf_qspi_pins_set
  *        function to specify that a given QSPI signal (SCK, CSN, IO0, IO1, IO2, or IO3)
@@ -106,46 +78,26 @@ typedef enum
     NRF_QSPI_INT_READY_MASK = QSPI_INTENSET_READY_Msk /**< Interrupt on READY event. */
 } nrf_qspi_int_mask_t;
 
-/** @brief QSPI base clock frequency divider values. */
+/** @brief QSPI frequency divider values. */
 typedef enum
 {
-    NRF_QSPI_FREQ_DIV1,  /**< Divide by 1. */
-    NRF_QSPI_FREQ_DIV2,  /**< Divide by 2. */
-    NRF_QSPI_FREQ_DIV3,  /**< Divide by 3. */
-    NRF_QSPI_FREQ_DIV4,  /**< Divide by 4. */
-    NRF_QSPI_FREQ_DIV5,  /**< Divide by 5. */
-    NRF_QSPI_FREQ_DIV6,  /**< Divide by 6. */
-    NRF_QSPI_FREQ_DIV7,  /**< Divide by 7. */
-    NRF_QSPI_FREQ_DIV8,  /**< Divide by 8. */
-    NRF_QSPI_FREQ_DIV9,  /**< Divide by 9. */
-    NRF_QSPI_FREQ_DIV10, /**< Divide by 10. */
-    NRF_QSPI_FREQ_DIV11, /**< Divide by 11. */
-    NRF_QSPI_FREQ_DIV12, /**< Divide by 12. */
-    NRF_QSPI_FREQ_DIV13, /**< Divide by 13. */
-    NRF_QSPI_FREQ_DIV14, /**< Divide by 14. */
-    NRF_QSPI_FREQ_DIV15, /**< Divide by 15. */
-    NRF_QSPI_FREQ_DIV16, /**< Divide by 16. */
+    NRF_QSPI_FREQ_32MDIV1,  /**< 32.0 MHz. */
+    NRF_QSPI_FREQ_32MDIV2,  /**< 16.0 MHz. */
+    NRF_QSPI_FREQ_32MDIV3,  /**< 10.6 MHz. */
+    NRF_QSPI_FREQ_32MDIV4,  /**< 8.00 MHz. */
+    NRF_QSPI_FREQ_32MDIV5,  /**< 6.40 MHz. */
+    NRF_QSPI_FREQ_32MDIV6,  /**< 5.33 MHz. */
+    NRF_QSPI_FREQ_32MDIV7,  /**< 4.57 MHz. */
+    NRF_QSPI_FREQ_32MDIV8,  /**< 4.00 MHz. */
+    NRF_QSPI_FREQ_32MDIV9,  /**< 3.55 MHz. */
+    NRF_QSPI_FREQ_32MDIV10, /**< 3.20 MHz. */
+    NRF_QSPI_FREQ_32MDIV11, /**< 2.90 MHz. */
+    NRF_QSPI_FREQ_32MDIV12, /**< 2.66 MHz. */
+    NRF_QSPI_FREQ_32MDIV13, /**< 2.46 MHz. */
+    NRF_QSPI_FREQ_32MDIV14, /**< 2.29 MHz. */
+    NRF_QSPI_FREQ_32MDIV15, /**< 2.13 MHz. */
+    NRF_QSPI_FREQ_32MDIV16, /**< 2.00 MHz. */
 } nrf_qspi_frequency_t;
-
-#if defined(NRF52_SERIES)
-/** Symbols translation for backward compatibility. */
-#define NRF_QSPI_FREQ_32MDIV1  NRF_QSPI_FREQ_DIV1
-#define NRF_QSPI_FREQ_32MDIV2  NRF_QSPI_FREQ_DIV2
-#define NRF_QSPI_FREQ_32MDIV3  NRF_QSPI_FREQ_DIV3
-#define NRF_QSPI_FREQ_32MDIV4  NRF_QSPI_FREQ_DIV4
-#define NRF_QSPI_FREQ_32MDIV5  NRF_QSPI_FREQ_DIV5
-#define NRF_QSPI_FREQ_32MDIV6  NRF_QSPI_FREQ_DIV6
-#define NRF_QSPI_FREQ_32MDIV7  NRF_QSPI_FREQ_DIV7
-#define NRF_QSPI_FREQ_32MDIV8  NRF_QSPI_FREQ_DIV8
-#define NRF_QSPI_FREQ_32MDIV9  NRF_QSPI_FREQ_DIV9
-#define NRF_QSPI_FREQ_32MDIV10 NRF_QSPI_FREQ_DIV10
-#define NRF_QSPI_FREQ_32MDIV11 NRF_QSPI_FREQ_DIV11
-#define NRF_QSPI_FREQ_32MDIV12 NRF_QSPI_FREQ_DIV12
-#define NRF_QSPI_FREQ_32MDIV13 NRF_QSPI_FREQ_DIV13
-#define NRF_QSPI_FREQ_32MDIV14 NRF_QSPI_FREQ_DIV14
-#define NRF_QSPI_FREQ_32MDIV15 NRF_QSPI_FREQ_DIV15
-#define NRF_QSPI_FREQ_32MDIV16 NRF_QSPI_FREQ_DIV16
-#endif
 
 /** @brief Interface configuration for a read operation. */
 typedef enum
@@ -219,10 +171,10 @@ typedef struct
     uint8_t io0_pin; /**< IO0/MOSI pin number. */
     uint8_t io1_pin; /**< IO1/MISO pin number. */
     uint8_t io2_pin; /**< IO2 pin number (optional).
-                      *   Set to @ref NRF_QSPI_PIN_NOT_CONNECTED if this signal is not needed.
+                      * Set to @ref NRF_QSPI_PIN_NOT_CONNECTED if this signal is not needed.
                       */
     uint8_t io3_pin; /**< IO3 pin number (optional).
-                      *   Set to @ref NRF_QSPI_PIN_NOT_CONNECTED if this signal is not needed.
+                      * Set to @ref NRF_QSPI_PIN_NOT_CONNECTED if this signal is not needed.
                       */
 } nrf_qspi_pins_t;
 
@@ -263,26 +215,9 @@ typedef struct
     uint8_t              sck_delay; /**< tSHSL, tWHSL, and tSHWL in number of 16 MHz periods (62.5ns). */
     bool                 dpmen;     /**< Enable the DPM feature. */
     nrf_qspi_spi_mode_t  spi_mode;  /**< SPI phase and polarization. */
-    nrf_qspi_frequency_t sck_freq;  /**< SCK frequency given as QSPI base clock frequency divider.
-                                     *   To calculate @p sck_freq value corresponding to chosen frequency,
-                                     *   use the following equation:
-                                     *
-                                     *   sck_freq = (NRF_QSPI_BASE_CLOCK_FREQ / frequency) - 1
-                                     *
-                                     *   @note Achievable frequencies are determined by available
-                                     *         divider values and QSPI base clock frequency.
-                                     */
+    nrf_qspi_frequency_t sck_freq;  /**< SCK frequency given as enum @ref nrf_qspi_frequency_t. */
 } nrf_qspi_phy_conf_t;
 
-
-#if NRF_QSPI_HAS_XIP_ENC || NRF_QSPI_HAS_DMA_ENC
-/** @brief QSPI encryption settings for XIP and DMA transfers. */
-typedef struct
-{
-    uint32_t key[4];   /**< AES 128-bit key, stored on 4 32-bit words. */
-    uint32_t nonce[3]; /**< AES 96-bit nonce, stored on 3 32-bit words. */
-} nrf_qspi_encryption_t;
-#endif
 
 /**
  * @brief Function for activating the specified QSPI task.
@@ -290,7 +225,7 @@ typedef struct
  * @param[in] p_reg Pointer to the structure of registers of the peripheral.
  * @param[in] task  Task to be activated.
  */
-NRF_STATIC_INLINE void nrf_qspi_task_trigger(NRF_QSPI_Type * p_reg, nrf_qspi_task_t task);
+__STATIC_INLINE void nrf_qspi_task_trigger(NRF_QSPI_Type * p_reg, nrf_qspi_task_t task);
 
 /**
  * @brief Function for getting the address of the specified QSPI task register.
@@ -300,8 +235,8 @@ NRF_STATIC_INLINE void nrf_qspi_task_trigger(NRF_QSPI_Type * p_reg, nrf_qspi_tas
  *
  * @return Address of the specified task register.
  */
-NRF_STATIC_INLINE uint32_t nrf_qspi_task_address_get(NRF_QSPI_Type const * p_reg,
-                                                     nrf_qspi_task_t       task);
+__STATIC_INLINE uint32_t nrf_qspi_task_address_get(NRF_QSPI_Type const * p_reg,
+                                                   nrf_qspi_task_t       task);
 
 /**
  * @brief Function for clearing the specified QSPI event.
@@ -309,7 +244,7 @@ NRF_STATIC_INLINE uint32_t nrf_qspi_task_address_get(NRF_QSPI_Type const * p_reg
  * @param[in] p_reg Pointer to the structure of registers of the peripheral.
  * @param[in] event Event to be cleared.
  */
-NRF_STATIC_INLINE void nrf_qspi_event_clear(NRF_QSPI_Type * p_reg, nrf_qspi_event_t event);
+__STATIC_INLINE void nrf_qspi_event_clear(NRF_QSPI_Type * p_reg, nrf_qspi_event_t event);
 
 /**
  * @brief Function for retrieving the state of the QSPI event.
@@ -320,7 +255,7 @@ NRF_STATIC_INLINE void nrf_qspi_event_clear(NRF_QSPI_Type * p_reg, nrf_qspi_even
  * @retval true  The event has been generated.
  * @retval false The event has not been generated.
  */
-NRF_STATIC_INLINE bool nrf_qspi_event_check(NRF_QSPI_Type const * p_reg, nrf_qspi_event_t event);
+__STATIC_INLINE bool nrf_qspi_event_check(NRF_QSPI_Type const * p_reg, nrf_qspi_event_t event);
 
 /**
  * @brief Function for getting the address of the specified QSPI event register.
@@ -330,7 +265,7 @@ NRF_STATIC_INLINE bool nrf_qspi_event_check(NRF_QSPI_Type const * p_reg, nrf_qsp
  *
  * @return Address of the specified event register.
  */
-NRF_STATIC_INLINE uint32_t nrf_qspi_event_address_get(NRF_QSPI_Type const * p_reg,
+__STATIC_INLINE uint32_t * nrf_qspi_event_address_get(NRF_QSPI_Type const * p_reg,
                                                       nrf_qspi_event_t      event);
 
 /**
@@ -339,7 +274,7 @@ NRF_STATIC_INLINE uint32_t nrf_qspi_event_address_get(NRF_QSPI_Type const * p_re
  * @param[in] p_reg Pointer to the structure of registers of the peripheral.
  * @param[in] mask  Mask of interrupts to be enabled.
  */
-NRF_STATIC_INLINE void nrf_qspi_int_enable(NRF_QSPI_Type * p_reg, uint32_t mask);
+__STATIC_INLINE void nrf_qspi_int_enable(NRF_QSPI_Type * p_reg, uint32_t mask);
 
 /**
  * @brief Function for disabling specified interrupts.
@@ -347,31 +282,33 @@ NRF_STATIC_INLINE void nrf_qspi_int_enable(NRF_QSPI_Type * p_reg, uint32_t mask)
  * @param[in] p_reg Pointer to the structure of registers of the peripheral.
  * @param[in] mask  Mask of interrupts to be disabled.
  */
-NRF_STATIC_INLINE void nrf_qspi_int_disable(NRF_QSPI_Type * p_reg, uint32_t mask);
+__STATIC_INLINE void nrf_qspi_int_disable(NRF_QSPI_Type * p_reg, uint32_t mask);
 
 /**
- * @brief Function for checking if the specified interrupts are enabled.
+ * @brief Function for retrieving the state of a given interrupt.
  *
- * @param[in] p_reg Pointer to the structure of registers of the peripheral.
- * @param[in] mask  Mask of interrupts to be checked.
+ * @param[in] p_reg    Pointer to the structure of registers of the peripheral.
+ * @param[in] qspi_int Interrupt to be checked.
  *
- * @return Mask of enabled interrupts.
+ * @retval true  The interrupt is enabled.
+ * @retval false The interrupt is not enabled.
  */
-NRF_STATIC_INLINE uint32_t nrf_qspi_int_enable_check(NRF_QSPI_Type const * p_reg, uint32_t mask);
+__STATIC_INLINE bool nrf_qspi_int_enable_check(NRF_QSPI_Type const * p_reg,
+                                               nrf_qspi_int_mask_t   qspi_int);
 
 /**
  * @brief Function for enabling the QSPI peripheral.
  *
  * @param[in] p_reg Pointer to the structure of registers of the peripheral.
  */
-NRF_STATIC_INLINE void nrf_qspi_enable(NRF_QSPI_Type * p_reg);
+__STATIC_INLINE void nrf_qspi_enable(NRF_QSPI_Type * p_reg);
 
 /**
  * @brief Function for disabling the QSPI peripheral.
  *
  * @param[in] p_reg Pointer to the structure of registers of the peripheral.
  */
-NRF_STATIC_INLINE void nrf_qspi_disable(NRF_QSPI_Type * p_reg);
+__STATIC_INLINE void nrf_qspi_disable(NRF_QSPI_Type * p_reg);
 
 /**
  * @brief Function for configuring QSPI pins.
@@ -382,8 +319,8 @@ NRF_STATIC_INLINE void nrf_qspi_disable(NRF_QSPI_Type * p_reg);
  * @param[in] p_reg  Pointer to the structure of registers of the peripheral.
  * @param[in] p_pins Pointer to the pins configuration structure. See @ref nrf_qspi_pins_t.
  */
-NRF_STATIC_INLINE void nrf_qspi_pins_set(NRF_QSPI_Type *         p_reg,
-                                         nrf_qspi_pins_t const * p_pins);
+__STATIC_INLINE void nrf_qspi_pins_set(NRF_QSPI_Type *         p_reg,
+                                       const nrf_qspi_pins_t * p_pins);
 
 /**
  * @brief Function for setting the QSPI XIPOFFSET register.
@@ -391,8 +328,8 @@ NRF_STATIC_INLINE void nrf_qspi_pins_set(NRF_QSPI_Type *         p_reg,
  * @param[in] p_reg      Pointer to the structure of registers of the peripheral.
  * @param[in] xip_offset Address offset in the external memory for Execute in Place operation.
  */
-NRF_STATIC_INLINE void nrf_qspi_xip_offset_set(NRF_QSPI_Type * p_reg,
-                                               uint32_t        xip_offset);
+__STATIC_INLINE void nrf_qspi_xip_offset_set(NRF_QSPI_Type * p_reg,
+                                             uint32_t        xip_offset);
 
 /**
  * @brief Function for setting the QSPI IFCONFIG0 register.
@@ -401,8 +338,8 @@ NRF_STATIC_INLINE void nrf_qspi_xip_offset_set(NRF_QSPI_Type * p_reg,
  * @param[in] p_config Pointer to the QSPI protocol interface configuration structure.
  *                     See @ref nrf_qspi_prot_conf_t.
  */
-NRF_STATIC_INLINE void nrf_qspi_ifconfig0_set(NRF_QSPI_Type *              p_reg,
-                                              nrf_qspi_prot_conf_t const * p_config);
+__STATIC_INLINE void nrf_qspi_ifconfig0_set(NRF_QSPI_Type *              p_reg,
+                                            const nrf_qspi_prot_conf_t * p_config);
 
 /**
  * @brief Function for setting the QSPI IFCONFIG1 register.
@@ -411,8 +348,8 @@ NRF_STATIC_INLINE void nrf_qspi_ifconfig0_set(NRF_QSPI_Type *              p_reg
  * @param[in] p_config Pointer to the QSPI physical interface configuration structure.
  *                     See @ref nrf_qspi_phy_conf_t.
  */
-NRF_STATIC_INLINE void nrf_qspi_ifconfig1_set(NRF_QSPI_Type *             p_reg,
-                                              nrf_qspi_phy_conf_t const * p_config);
+__STATIC_INLINE void nrf_qspi_ifconfig1_set(NRF_QSPI_Type *             p_reg,
+                                            const nrf_qspi_phy_conf_t * p_config);
 
 /**
  * @brief Function for setting the QSPI ADDRCONF register.
@@ -429,8 +366,8 @@ NRF_STATIC_INLINE void nrf_qspi_ifconfig1_set(NRF_QSPI_Type *             p_reg,
  * @param[in] p_config Pointer to the addressing mode configuration structure.
  *                     See @ref nrf_qspi_addrconfig_conf_t.
 */
-NRF_STATIC_INLINE void nrf_qspi_addrconfig_set(NRF_QSPI_Type *                    p_reg,
-                                               nrf_qspi_addrconfig_conf_t const * p_config);
+__STATIC_INLINE void nrf_qspi_addrconfig_set(NRF_QSPI_Type *                    p_reg,
+                                             const nrf_qspi_addrconfig_conf_t * p_config);
 
 /**
  * @brief Function for setting write data into the peripheral register (without starting the process).
@@ -440,10 +377,10 @@ NRF_STATIC_INLINE void nrf_qspi_addrconfig_set(NRF_QSPI_Type *                  
  * @param[in] length    Lenght of the writing data.
  * @param[in] dest_addr Address in memory to write to.
  */
-NRF_STATIC_INLINE void nrf_qspi_write_buffer_set(NRF_QSPI_Type * p_reg,
-                                                 void const *    p_buffer,
-                                                 uint32_t        length,
-                                                 uint32_t        dest_addr);
+__STATIC_INLINE void nrf_qspi_write_buffer_set(NRF_QSPI_Type * p_reg,
+                                               void const *    p_buffer,
+                                               uint32_t        length,
+                                               uint32_t        dest_addr);
 
 /**
  * @brief Function for setting read data into the peripheral register (without starting the process).
@@ -453,10 +390,10 @@ NRF_STATIC_INLINE void nrf_qspi_write_buffer_set(NRF_QSPI_Type * p_reg,
  * @param[in]  length   Length of the read data.
  * @param[in]  src_addr Address in memory to read from.
  */
-NRF_STATIC_INLINE void nrf_qspi_read_buffer_set(NRF_QSPI_Type * p_reg,
-                                                void *          p_buffer,
-                                                uint32_t        length,
-                                                uint32_t        src_addr);
+__STATIC_INLINE void nrf_qspi_read_buffer_set(NRF_QSPI_Type * p_reg,
+                                              void *          p_buffer,
+                                              uint32_t        length,
+                                              uint32_t        src_addr);
 
 /**
  * @brief Function for setting erase data into the peripheral register (without starting the process).
@@ -465,9 +402,9 @@ NRF_STATIC_INLINE void nrf_qspi_read_buffer_set(NRF_QSPI_Type * p_reg,
  * @param[in] erase_addr Start address to erase. Address must have padding set to 4 bytes.
  * @param[in] len        Size of erasing area.
  */
-NRF_STATIC_INLINE void nrf_qspi_erase_ptr_set(NRF_QSPI_Type *      p_reg,
-                                              uint32_t             erase_addr,
-                                              nrf_qspi_erase_len_t len);
+__STATIC_INLINE void nrf_qspi_erase_ptr_set(NRF_QSPI_Type *      p_reg,
+                                            uint32_t             erase_addr,
+                                            nrf_qspi_erase_len_t len);
 
 /**
  * @brief Function for getting the peripheral status register.
@@ -476,7 +413,7 @@ NRF_STATIC_INLINE void nrf_qspi_erase_ptr_set(NRF_QSPI_Type *      p_reg,
  *
  * @return Peripheral status register.
  */
-NRF_STATIC_INLINE uint32_t nrf_qspi_status_reg_get(NRF_QSPI_Type const * p_reg);
+__STATIC_INLINE uint32_t nrf_qspi_status_reg_get(NRF_QSPI_Type const * p_reg);
 
 /**
  * @brief Function for getting the device status register stored in the peripheral status register.
@@ -485,7 +422,7 @@ NRF_STATIC_INLINE uint32_t nrf_qspi_status_reg_get(NRF_QSPI_Type const * p_reg);
  *
  * @return Device status register (lower byte).
  */
-NRF_STATIC_INLINE uint8_t nrf_qspi_sreg_get(NRF_QSPI_Type const * p_reg);
+__STATIC_INLINE uint8_t nrf_qspi_sreg_get(NRF_QSPI_Type const * p_reg);
 
 /**
  * @brief Function for checking if the peripheral is busy or not.
@@ -495,7 +432,7 @@ NRF_STATIC_INLINE uint8_t nrf_qspi_sreg_get(NRF_QSPI_Type const * p_reg);
  * @retval true  The QSPI is busy.
  * @retval false The QSPI is ready.
  */
-NRF_STATIC_INLINE bool nrf_qspi_busy_check(NRF_QSPI_Type const * p_reg);
+__STATIC_INLINE bool nrf_qspi_busy_check(NRF_QSPI_Type const * p_reg);
 
 /**
  * @brief Function for setting registers sending with custom instruction transmission.
@@ -507,9 +444,9 @@ NRF_STATIC_INLINE bool nrf_qspi_busy_check(NRF_QSPI_Type const * p_reg);
  * @param[in] length    Length of the custom instruction data.
  * @param[in] p_tx_data Pointer to the data to send with the custom instruction.
  */
-NRF_STATIC_INLINE void nrf_qspi_cinstrdata_set(NRF_QSPI_Type *       p_reg,
-                                               nrf_qspi_cinstr_len_t length,
-                                               void const *          p_tx_data);
+__STATIC_INLINE void nrf_qspi_cinstrdata_set(NRF_QSPI_Type *       p_reg,
+                                             nrf_qspi_cinstr_len_t length,
+                                             void const *          p_tx_data);
 
 /**
  * @brief Function for getting data from register after custom instruction transmission.
@@ -518,9 +455,9 @@ NRF_STATIC_INLINE void nrf_qspi_cinstrdata_set(NRF_QSPI_Type *       p_reg,
  * @param[in] length    Length of the custom instruction data.
  * @param[in] p_rx_data Pointer to the reading buffer.
  */
-NRF_STATIC_INLINE void nrf_qspi_cinstrdata_get(NRF_QSPI_Type const * p_reg,
-                                               nrf_qspi_cinstr_len_t length,
-                                               void *                p_rx_data);
+__STATIC_INLINE void nrf_qspi_cinstrdata_get(NRF_QSPI_Type const * p_reg,
+                                             nrf_qspi_cinstr_len_t length,
+                                             void *                p_rx_data);
 
 /**
  * @brief Function for sending custom instruction to external memory.
@@ -529,8 +466,9 @@ NRF_STATIC_INLINE void nrf_qspi_cinstrdata_get(NRF_QSPI_Type const * p_reg,
  * @param[in] p_config Pointer to the custom instruction configuration structure.
  *                     See @ref nrf_qspi_cinstr_conf_t.
  */
-NRF_STATIC_INLINE void nrf_qspi_cinstr_transfer_start(NRF_QSPI_Type *                p_reg,
-                                                      nrf_qspi_cinstr_conf_t const * p_config);
+
+__STATIC_INLINE void nrf_qspi_cinstr_transfer_start(NRF_QSPI_Type *                p_reg,
+                                                    const nrf_qspi_cinstr_conf_t * p_config);
 
 /**
  * @brief Function for starting a custom instruction long transfer.
@@ -539,8 +477,8 @@ NRF_STATIC_INLINE void nrf_qspi_cinstr_transfer_start(NRF_QSPI_Type *           
  * @param[in] p_config Pointer to the custom instruction configuration structure.
  *                     See @ref nrf_qspi_cinstr_conf_t.
  */
-NRF_STATIC_INLINE void nrf_qspi_cinstr_long_transfer_start(NRF_QSPI_Type *                p_reg,
-                                                           nrf_qspi_cinstr_conf_t const * p_config);
+__STATIC_INLINE void nrf_qspi_cinstr_long_transfer_start(NRF_QSPI_Type *                p_reg,
+                                                         const nrf_qspi_cinstr_conf_t * p_config);
 
 /**
  * @brief Function for checking whether a custom instruction long transfer is ongoing.
@@ -550,7 +488,7 @@ NRF_STATIC_INLINE void nrf_qspi_cinstr_long_transfer_start(NRF_QSPI_Type *      
  * @retval true  Custom instruction long transfer is ongoing.
  * @retval false Custom instruction long transfer is not ongoing.
  */
-NRF_STATIC_INLINE bool nrf_qspi_cinstr_long_transfer_is_ongoing(NRF_QSPI_Type const * p_reg);
+__STATIC_INLINE bool nrf_qspi_cinstr_long_transfer_is_ongoing(NRF_QSPI_Type const * p_reg);
 
 /**
  * @brief Function for continuing a custom instruction long transfer.
@@ -560,110 +498,61 @@ NRF_STATIC_INLINE bool nrf_qspi_cinstr_long_transfer_is_ongoing(NRF_QSPI_Type co
  * @param[in] finalize True if the custom instruction long transfer is to be finalized.
  *                     False if the custom instruction long transfer is to be continued.
  */
-NRF_STATIC_INLINE void nrf_qspi_cinstr_long_transfer_continue(NRF_QSPI_Type *       p_reg,
-                                                              nrf_qspi_cinstr_len_t length,
-                                                              bool                  finalize);
+__STATIC_INLINE void nrf_qspi_cinstr_long_transfer_continue(NRF_QSPI_Type *       p_reg,
+                                                            nrf_qspi_cinstr_len_t length,
+                                                            bool                  finalize);
 
-#if NRF_QSPI_HAS_XIPEN
-/**
- * @brief Function for enabling or disabling Execute in Place (XIP) operation.
- *
- * @note XIP can be enabled after reset. See Product Specification.
- *
- * @param[in] p_reg  Pointer to the structure of registers of the peripheral.
- * @param[in] enable True if XIP is to be enabled, false otherwise.
- */
-NRF_STATIC_INLINE void nrf_qspi_xip_set(NRF_QSPI_Type * p_reg, bool enable);
-#endif
+#ifndef SUPPRESS_INLINE_IMPLEMENTATION
 
-#if NRF_QSPI_HAS_XIP_ENC
-/**
- * @brief Function for configuring the XIP encryption.
- *
- * @param[in] p_reg Pointer to the structure of registers of the peripheral.
- * @param[in] p_cfg Pointer to encryption configuration structure.
- */
-NRF_STATIC_INLINE void nrf_qspi_xip_encryption_configure(NRF_QSPI_Type *               p_reg,
-                                                         nrf_qspi_encryption_t const * p_cfg);
-
-/**
- * @brief Function for enabling or disabling the XIP encryption.
- *
- * @param[in] p_reg  Pointer to the structure of registers of the peripheral.
- * @param[in] enable True if XIP encryption is to be enabled, false otherwise.
- */
-NRF_STATIC_INLINE void nrf_qspi_xip_encryption_set(NRF_QSPI_Type * p_reg, bool enable);
-#endif
-
-#if NRF_QSPI_HAS_DMA_ENC
-/**
- * @brief Function for configuring the EasyDMA encryption.
- *
- * @param[in] p_reg Pointer to the structure of registers of the peripheral.
- * @param[in] p_cfg Pointer to encryption configuration structure.
- */
-NRF_STATIC_INLINE void nrf_qspi_dma_encryption_configure(NRF_QSPI_Type *               p_reg,
-                                                         nrf_qspi_encryption_t const * p_cfg);
-
-/**
- * @brief Function for enabling or disabling the EasyDMA encryption.
- *
- * @param[in] p_reg  Pointer to the structure of registers of the peripheral.
- * @param[in] enable True if EasyDMA encryption is to be enabled, false otherwise.
- */
-NRF_STATIC_INLINE void nrf_qspi_dma_encryption_set(NRF_QSPI_Type * p_reg, bool enable);
-#endif
-
-#ifndef NRF_DECLARE_ONLY
-
-NRF_STATIC_INLINE void nrf_qspi_task_trigger(NRF_QSPI_Type * p_reg, nrf_qspi_task_t task)
+__STATIC_INLINE void nrf_qspi_task_trigger(NRF_QSPI_Type * p_reg, nrf_qspi_task_t task)
 {
     *((volatile uint32_t *)((uint8_t *)p_reg + (uint32_t)task)) = 0x1UL;
 }
 
-NRF_STATIC_INLINE uint32_t nrf_qspi_task_address_get(NRF_QSPI_Type const * p_reg,
-                                                     nrf_qspi_task_t       task)
+__STATIC_INLINE uint32_t nrf_qspi_task_address_get(NRF_QSPI_Type const * p_reg,
+                                                   nrf_qspi_task_t       task)
 {
     return ((uint32_t)p_reg + (uint32_t)task);
 }
 
-NRF_STATIC_INLINE void nrf_qspi_event_clear(NRF_QSPI_Type * p_reg, nrf_qspi_event_t event)
+__STATIC_INLINE void nrf_qspi_event_clear(NRF_QSPI_Type * p_reg, nrf_qspi_event_t event)
 {
     *((volatile uint32_t *)((uint8_t *)p_reg + (uint32_t)event)) = 0x0UL;
 }
 
-NRF_STATIC_INLINE bool nrf_qspi_event_check(NRF_QSPI_Type const * p_reg, nrf_qspi_event_t event)
+__STATIC_INLINE bool nrf_qspi_event_check(NRF_QSPI_Type const * p_reg, nrf_qspi_event_t event)
 {
     return (bool)*(volatile uint32_t *)((uint8_t *)p_reg + (uint32_t)event);
 }
 
-NRF_STATIC_INLINE uint32_t nrf_qspi_event_address_get(NRF_QSPI_Type const * p_reg,
+__STATIC_INLINE uint32_t * nrf_qspi_event_address_get(NRF_QSPI_Type const * p_reg,
                                                       nrf_qspi_event_t      event)
 {
-    return (uint32_t)((uint8_t *)p_reg + (uint32_t)event);
+    return (uint32_t *)((uint8_t *)p_reg + (uint32_t)event);
 }
 
-NRF_STATIC_INLINE void nrf_qspi_int_enable(NRF_QSPI_Type * p_reg, uint32_t mask)
+__STATIC_INLINE void nrf_qspi_int_enable(NRF_QSPI_Type * p_reg, uint32_t mask)
 {
     p_reg->INTENSET = mask;
 }
 
-NRF_STATIC_INLINE void nrf_qspi_int_disable(NRF_QSPI_Type * p_reg, uint32_t mask)
+__STATIC_INLINE void nrf_qspi_int_disable(NRF_QSPI_Type * p_reg, uint32_t mask)
 {
     p_reg->INTENCLR = mask;
 }
 
-NRF_STATIC_INLINE uint32_t nrf_qspi_int_enable_check(NRF_QSPI_Type const * p_reg, uint32_t mask)
+__STATIC_INLINE bool nrf_qspi_int_enable_check(NRF_QSPI_Type const * p_reg,
+                                               nrf_qspi_int_mask_t   qspi_int)
 {
-    return p_reg->INTENSET & mask;
+    return (bool)(p_reg->INTENSET & qspi_int);
 }
 
-NRF_STATIC_INLINE void nrf_qspi_enable(NRF_QSPI_Type * p_reg)
+__STATIC_INLINE void nrf_qspi_enable(NRF_QSPI_Type * p_reg)
 {
     p_reg->ENABLE = (QSPI_ENABLE_ENABLE_Enabled << QSPI_ENABLE_ENABLE_Pos);
 }
 
-NRF_STATIC_INLINE void nrf_qspi_disable(NRF_QSPI_Type * p_reg)
+__STATIC_INLINE void nrf_qspi_disable(NRF_QSPI_Type * p_reg)
 {
     // Workaround for nRF52840 anomaly 122: Current consumption is too high.
     *(volatile uint32_t *)0x40029054ul = 1ul;
@@ -671,7 +560,7 @@ NRF_STATIC_INLINE void nrf_qspi_disable(NRF_QSPI_Type * p_reg)
     p_reg->ENABLE = (QSPI_ENABLE_ENABLE_Disabled << QSPI_ENABLE_ENABLE_Pos);
 }
 
-NRF_STATIC_INLINE void nrf_qspi_pins_set(NRF_QSPI_Type * p_reg, nrf_qspi_pins_t const * p_pins)
+__STATIC_INLINE void nrf_qspi_pins_set(NRF_QSPI_Type * p_reg, const nrf_qspi_pins_t * p_pins)
 {
     p_reg->PSEL.SCK = NRF_QSPI_PIN_VAL(p_pins->sck_pin);
     p_reg->PSEL.CSN = NRF_QSPI_PIN_VAL(p_pins->csn_pin);
@@ -681,14 +570,14 @@ NRF_STATIC_INLINE void nrf_qspi_pins_set(NRF_QSPI_Type * p_reg, nrf_qspi_pins_t 
     p_reg->PSEL.IO3 = NRF_QSPI_PIN_VAL(p_pins->io3_pin);
 }
 
-NRF_STATIC_INLINE void nrf_qspi_xip_offset_set(NRF_QSPI_Type * p_reg,
-                                               uint32_t        xip_offset)
+__STATIC_INLINE void nrf_qspi_xip_offset_set(NRF_QSPI_Type * p_reg,
+                                             uint32_t        xip_offset)
 {
     p_reg->XIPOFFSET = xip_offset;
 }
 
-NRF_STATIC_INLINE void nrf_qspi_ifconfig0_set(NRF_QSPI_Type *              p_reg,
-                                              nrf_qspi_prot_conf_t const * p_config)
+__STATIC_INLINE void nrf_qspi_ifconfig0_set(NRF_QSPI_Type *              p_reg,
+                                            const nrf_qspi_prot_conf_t * p_config)
 {
     uint32_t config = p_config->readoc;
     config |= ((uint32_t)p_config->writeoc)    << QSPI_IFCONFIG0_WRITEOC_Pos;
@@ -698,8 +587,8 @@ NRF_STATIC_INLINE void nrf_qspi_ifconfig0_set(NRF_QSPI_Type *              p_reg
     p_reg->IFCONFIG0 = config;
 }
 
-NRF_STATIC_INLINE void nrf_qspi_ifconfig1_set(NRF_QSPI_Type *             p_reg,
-                                              nrf_qspi_phy_conf_t const * p_config)
+__STATIC_INLINE void nrf_qspi_ifconfig1_set(NRF_QSPI_Type *             p_reg,
+                                            const nrf_qspi_phy_conf_t * p_config)
 {
     // IFCONFIG1 mask for reserved fields in the register.
     uint32_t config = p_reg->IFCONFIG1 & 0x00FFFF00;
@@ -711,8 +600,8 @@ NRF_STATIC_INLINE void nrf_qspi_ifconfig1_set(NRF_QSPI_Type *             p_reg,
     p_reg->IFCONFIG1 = config;
 }
 
-NRF_STATIC_INLINE void nrf_qspi_addrconfig_set(NRF_QSPI_Type *                    p_reg,
-                                               nrf_qspi_addrconfig_conf_t const * p_config)
+__STATIC_INLINE void nrf_qspi_addrconfig_set(NRF_QSPI_Type *                    p_reg,
+                                             const nrf_qspi_addrconfig_conf_t * p_config)
 {
     uint32_t config = p_config->opcode;
     config |= ((uint32_t)p_config->byte0)   << QSPI_ADDRCONF_BYTE0_Pos;
@@ -724,53 +613,53 @@ NRF_STATIC_INLINE void nrf_qspi_addrconfig_set(NRF_QSPI_Type *                  
     p_reg->ADDRCONF = config;
 }
 
-NRF_STATIC_INLINE void nrf_qspi_write_buffer_set(NRF_QSPI_Type * p_reg,
-                                                 void const    * p_buffer,
-                                                 uint32_t        length,
-                                                 uint32_t        dest_addr)
+__STATIC_INLINE void nrf_qspi_write_buffer_set(NRF_QSPI_Type * p_reg,
+                                               void const    * p_buffer,
+                                               uint32_t        length,
+                                               uint32_t        dest_addr)
 {
     p_reg->WRITE.DST = dest_addr;
     p_reg->WRITE.SRC = (uint32_t) p_buffer;
     p_reg->WRITE.CNT = length;
 }
 
-NRF_STATIC_INLINE void nrf_qspi_read_buffer_set(NRF_QSPI_Type * p_reg,
-                                                void          * p_buffer,
-                                                uint32_t        length,
-                                                uint32_t        src_addr)
+__STATIC_INLINE void nrf_qspi_read_buffer_set(NRF_QSPI_Type * p_reg,
+                                              void          * p_buffer,
+                                              uint32_t        length,
+                                              uint32_t        src_addr)
 {
     p_reg->READ.SRC = src_addr;
     p_reg->READ.DST = (uint32_t) p_buffer;
     p_reg->READ.CNT = length;
 }
 
-NRF_STATIC_INLINE void nrf_qspi_erase_ptr_set(NRF_QSPI_Type *      p_reg,
-                                              uint32_t             erase_addr,
-                                              nrf_qspi_erase_len_t len)
+__STATIC_INLINE void nrf_qspi_erase_ptr_set(NRF_QSPI_Type *      p_reg,
+                                            uint32_t             erase_addr,
+                                            nrf_qspi_erase_len_t len)
 {
     p_reg->ERASE.PTR = erase_addr;
     p_reg->ERASE.LEN = len;
 }
 
-NRF_STATIC_INLINE uint32_t nrf_qspi_status_reg_get(NRF_QSPI_Type const * p_reg)
+__STATIC_INLINE uint32_t nrf_qspi_status_reg_get(NRF_QSPI_Type const * p_reg)
 {
     return p_reg->STATUS;
 }
 
-NRF_STATIC_INLINE uint8_t nrf_qspi_sreg_get(NRF_QSPI_Type const * p_reg)
+__STATIC_INLINE uint8_t nrf_qspi_sreg_get(NRF_QSPI_Type const * p_reg)
 {
     return (uint8_t)(p_reg->STATUS & QSPI_STATUS_SREG_Msk) >> QSPI_STATUS_SREG_Pos;
 }
 
-NRF_STATIC_INLINE bool nrf_qspi_busy_check(NRF_QSPI_Type const * p_reg)
+__STATIC_INLINE bool nrf_qspi_busy_check(NRF_QSPI_Type const * p_reg)
 {
     return ((p_reg->STATUS & QSPI_STATUS_READY_Msk) >>
             QSPI_STATUS_READY_Pos) == QSPI_STATUS_READY_BUSY;
 }
 
-NRF_STATIC_INLINE void nrf_qspi_cinstrdata_set(NRF_QSPI_Type *       p_reg,
-                                               nrf_qspi_cinstr_len_t length,
-                                               void const *          p_tx_data)
+__STATIC_INLINE void nrf_qspi_cinstrdata_set(NRF_QSPI_Type *       p_reg,
+                                             nrf_qspi_cinstr_len_t length,
+                                             void const *          p_tx_data)
 {
     uint32_t reg = 0;
     uint8_t const *p_tx_data_8 = (uint8_t const *) p_tx_data;
@@ -813,9 +702,9 @@ NRF_STATIC_INLINE void nrf_qspi_cinstrdata_set(NRF_QSPI_Type *       p_reg,
     }
 }
 
-NRF_STATIC_INLINE void nrf_qspi_cinstrdata_get(NRF_QSPI_Type const * p_reg,
-                                               nrf_qspi_cinstr_len_t length,
-                                               void *                p_rx_data)
+__STATIC_INLINE void nrf_qspi_cinstrdata_get(NRF_QSPI_Type const * p_reg,
+                                             nrf_qspi_cinstr_len_t length,
+                                             void *                p_rx_data)
 {
     uint8_t *p_rx_data_8 = (uint8_t *) p_rx_data;
 
@@ -855,8 +744,8 @@ NRF_STATIC_INLINE void nrf_qspi_cinstrdata_get(NRF_QSPI_Type const * p_reg,
     }
 }
 
-NRF_STATIC_INLINE void nrf_qspi_cinstr_transfer_start(NRF_QSPI_Type *                p_reg,
-                                                      nrf_qspi_cinstr_conf_t const * p_config)
+__STATIC_INLINE void nrf_qspi_cinstr_transfer_start(NRF_QSPI_Type *                p_reg,
+                                                    const nrf_qspi_cinstr_conf_t * p_config)
 {
     p_reg->CINSTRCONF = (((uint32_t)p_config->opcode    << QSPI_CINSTRCONF_OPCODE_Pos) |
                          ((uint32_t)p_config->length    << QSPI_CINSTRCONF_LENGTH_Pos) |
@@ -866,8 +755,8 @@ NRF_STATIC_INLINE void nrf_qspi_cinstr_transfer_start(NRF_QSPI_Type *           
                          ((uint32_t)p_config->wren      << QSPI_CINSTRCONF_WREN_Pos));
 }
 
-NRF_STATIC_INLINE void nrf_qspi_cinstr_long_transfer_start(NRF_QSPI_Type *                p_reg,
-                                                           nrf_qspi_cinstr_conf_t const * p_config)
+__STATIC_INLINE void nrf_qspi_cinstr_long_transfer_start(NRF_QSPI_Type *                p_reg,
+                                                         const nrf_qspi_cinstr_conf_t * p_config)
 {
     p_reg->CINSTRCONF = (((uint32_t)p_config->opcode    << QSPI_CINSTRCONF_OPCODE_Pos) |
                          ((uint32_t)p_config->length    << QSPI_CINSTRCONF_LENGTH_Pos) |
@@ -878,15 +767,15 @@ NRF_STATIC_INLINE void nrf_qspi_cinstr_long_transfer_start(NRF_QSPI_Type *      
                          (QSPI_CINSTRCONF_LFEN_Msk));
 }
 
-NRF_STATIC_INLINE bool nrf_qspi_cinstr_long_transfer_is_ongoing(NRF_QSPI_Type const * p_reg)
+__STATIC_INLINE bool nrf_qspi_cinstr_long_transfer_is_ongoing(NRF_QSPI_Type const * p_reg)
 {
     return (bool)((p_reg->CINSTRCONF & (QSPI_CINSTRCONF_LFEN_Msk | QSPI_CINSTRCONF_LFSTOP_Msk))
                    == QSPI_CINSTRCONF_LFEN_Msk);
 }
 
-NRF_STATIC_INLINE void nrf_qspi_cinstr_long_transfer_continue(NRF_QSPI_Type *       p_reg,
-                                                              nrf_qspi_cinstr_len_t length,
-                                                              bool                  finalize)
+__STATIC_INLINE void nrf_qspi_cinstr_long_transfer_continue(NRF_QSPI_Type *       p_reg,
+                                                            nrf_qspi_cinstr_len_t length,
+                                                            bool                  finalize)
 {
     uint32_t mask = (((uint32_t)length << QSPI_CINSTRCONF_LENGTH_Pos) | (QSPI_CINSTRCONF_LFEN_Msk));
     mask |= (finalize ? QSPI_CINSTRCONF_LFSTOP_Msk : 0);
@@ -894,56 +783,7 @@ NRF_STATIC_INLINE void nrf_qspi_cinstr_long_transfer_continue(NRF_QSPI_Type *   
     p_reg->CINSTRCONF = mask;
 }
 
-#if NRF_QSPI_HAS_XIPEN
-NRF_STATIC_INLINE void nrf_qspi_xip_set(NRF_QSPI_Type * p_reg, bool enable)
-{
-    p_reg->XIPEN = (enable ? QSPI_XIPEN_XIPEN_Enable << QSPI_XIPEN_XIPEN_Pos
-                           : QSPI_XIPEN_XIPEN_Disable << QSPI_XIPEN_XIPEN_Pos);
-}
-#endif
-
-#if NRF_QSPI_HAS_XIP_ENC
-NRF_STATIC_INLINE void nrf_qspi_xip_encryption_configure(NRF_QSPI_Type *               p_reg,
-                                                         nrf_qspi_encryption_t const * p_cfg)
-{
-    p_reg->XIP_ENC.KEY0 = p_cfg->key[0];
-    p_reg->XIP_ENC.KEY1 = p_cfg->key[1];
-    p_reg->XIP_ENC.KEY2 = p_cfg->key[2];
-    p_reg->XIP_ENC.KEY3 = p_cfg->key[3];
-    p_reg->XIP_ENC.NONCE0 = p_cfg->nonce[0];
-    p_reg->XIP_ENC.NONCE1 = p_cfg->nonce[1];
-    p_reg->XIP_ENC.NONCE2 = p_cfg->nonce[2];
-}
-
-NRF_STATIC_INLINE void nrf_qspi_xip_encryption_set(NRF_QSPI_Type * p_reg, bool enable)
-{
-    p_reg->XIP_ENC.ENABLE =
-        (enable ? QSPI_XIP_ENC_ENABLE_ENABLE_Enabled << QSPI_XIP_ENC_ENABLE_ENABLE_Pos
-                : QSPI_XIP_ENC_ENABLE_ENABLE_Disabled << QSPI_XIP_ENC_ENABLE_ENABLE_Pos);
-}
-#endif
-
-#if NRF_QSPI_HAS_DMA_ENC
-NRF_STATIC_INLINE void nrf_qspi_dma_encryption_configure(NRF_QSPI_Type *               p_reg,
-                                                         nrf_qspi_encryption_t const * p_cfg)
-{
-    p_reg->DMA_ENC.KEY0 = p_cfg->key[0];
-    p_reg->DMA_ENC.KEY1 = p_cfg->key[1];
-    p_reg->DMA_ENC.KEY2 = p_cfg->key[2];
-    p_reg->DMA_ENC.KEY3 = p_cfg->key[3];
-    p_reg->DMA_ENC.NONCE0 = p_cfg->nonce[0];
-    p_reg->DMA_ENC.NONCE1 = p_cfg->nonce[1];
-    p_reg->DMA_ENC.NONCE2 = p_cfg->nonce[2];
-}
-
-NRF_STATIC_INLINE void nrf_qspi_dma_encryption_set(NRF_QSPI_Type * p_reg, bool enable)
-{
-    p_reg->DMA_ENC.ENABLE =
-        (enable ? QSPI_DMA_ENC_ENABLE_ENABLE_Enabled << QSPI_DMA_ENC_ENABLE_ENABLE_Pos
-                : QSPI_DMA_ENC_ENABLE_ENABLE_Disabled << QSPI_DMA_ENC_ENABLE_ENABLE_Pos);
-}
-#endif
-#endif // NRF_DECLARE_ONLY
+#endif // SUPPRESS_INLINE_IMPLEMENTATION
 
 /** @} */
 

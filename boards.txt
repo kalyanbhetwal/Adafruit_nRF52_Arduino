@@ -40,8 +40,8 @@ feather52832.build.f_cpu=64000000
 feather52832.build.board=NRF52832_FEATHER
 feather52832.build.core=nRF5
 feather52832.build.variant=feather_nrf52832
-feather52832.build.usb_manufacturer="Adafruit LLC"
-feather52832.build.usb_product="Feather nRF52832"
+feather52840.build.usb_manufacturer="Adafruit LLC"
+feather52840.build.usb_product="Feather nRF52832"
 feather52832.build.extra_flags=-DNRF52832_XXAA -DNRF52
 feather52832.build.ldscript=nrf52832_s132_v6.ld
 
@@ -119,7 +119,7 @@ feather52840.menu.debug.l3.build.sysview_flags=-DCFG_SYSVIEW=1
 # ----------------------------------
 # Bluefruit Feather nRF52840 Express s340
 # ----------------------------------
-feather52840_s340.name=Adafruit Bluefruit Feather nRF52840 Express S340
+feather52840_s340.name=Adafruit Bluefruit Feather nRF52840 Express w.ANT
 
 # VID/PID for bootloader with/without UF2, Arduino + Circuitpython App
 feather52840_s340.vid.0=0x239A
@@ -172,9 +172,9 @@ feather52840_s340.menu.debug.l3.build.debug_flags=-DCFG_DEBUG=3
 
 
 # ----------------------------------
-# Feather nRF52840 sense
+# Feather Bluefruit sense
 # ----------------------------------
-feather52840sense.name=Adafruit Feather nRF52840 Sense
+feather52840sense.name=Adafruit Feather Bluefruit Sense
 
 # VID/PID for bootloader with/without UF2, Arduino + Circuitpython App
 feather52840sense.vid.0=0x239A
@@ -390,9 +390,9 @@ cluenrf52840.menu.debug.l3.build.debug_flags=-DCFG_DEBUG=3
 cluenrf52840.menu.debug.l3.build.sysview_flags=-DCFG_SYSVIEW=1
 
 # ----------------------------------
-# Metro nRF52840 Express
+# Bluefruit Metro nRF52840 Express
 # ----------------------------------
-metro52840.name=Adafruit Metro nRF52840 Express
+metro52840.name=Adafruit Bluefruit Metro nRF52840 Express
 
 # VID/PID for bootloader with/without UF2, Arduino + Circuitpython App
 metro52840.vid.0=0x239A

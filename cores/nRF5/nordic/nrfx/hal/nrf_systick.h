@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 - 2020, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -85,28 +85,28 @@ typedef enum {
  * @note The @ref NRF_SYSTICK_CSR_COUNTFLAG_MASK value is cleared when CSR register is read.
  * @return Values composed by @ref nrf_systick_csr_flags_t.
  */
-NRF_STATIC_INLINE uint32_t nrf_systick_csr_get(void);
+__STATIC_INLINE uint32_t nrf_systick_csr_get(void);
 
 /**
  * @brief Function for setting Configuration and Status Register.
  *
  * @param[in] val The value composed from @ref nrf_systick_csr_flags_t.
  */
-NRF_STATIC_INLINE void nrf_systick_csr_set(uint32_t val);
+__STATIC_INLINE void nrf_systick_csr_set(uint32_t val);
 
 /**
  * @brief Function for getting the current reload value.
  *
  * @return The reload register value.
  */
-NRF_STATIC_INLINE uint32_t nrf_systick_load_get(void);
+__STATIC_INLINE uint32_t nrf_systick_load_get(void);
 
 /**
  * @brief Function for configuring the reload value.
  *
  * @param[in] val The value to be set in the reload register.
  */
-NRF_STATIC_INLINE void nrf_systick_load_set(uint32_t val);
+__STATIC_INLINE void nrf_systick_load_set(uint32_t val);
 
 /**
  * @brief Function for reading the SysTick current value.
@@ -114,7 +114,7 @@ NRF_STATIC_INLINE void nrf_systick_load_set(uint32_t val);
  * @return The current SysTick value
  * @sa NRF_SYSTICK_VAL_MASK
  */
-NRF_STATIC_INLINE uint32_t nrf_systick_val_get(void);
+__STATIC_INLINE uint32_t nrf_systick_val_get(void);
 
 /**
  * @brief Function for clearing the SysTick current value.
@@ -122,54 +122,54 @@ NRF_STATIC_INLINE uint32_t nrf_systick_val_get(void);
  * @note The SysTick does not allow setting current value.
  *       Any write to VAL register would clear the timer.
  */
-NRF_STATIC_INLINE void nrf_systick_val_clear(void);
+__STATIC_INLINE void nrf_systick_val_clear(void);
 
 /**
  * @brief Function for reading the calibration register.
  *
  * @return The calibration register value.
  */
-NRF_STATIC_INLINE uint32_t nrf_systick_calib_get(void);
+__STATIC_INLINE uint32_t nrf_systick_calib_get(void);
 
 
-#ifndef NRF_DECLARE_ONLY
+#ifndef SUPPRESS_INLINE_IMPLEMENTATION
 
-NRF_STATIC_INLINE uint32_t nrf_systick_csr_get(void)
+__STATIC_INLINE uint32_t nrf_systick_csr_get(void)
 {
     return SysTick->CTRL;
 }
 
-NRF_STATIC_INLINE void nrf_systick_csr_set(uint32_t val)
+__STATIC_INLINE void nrf_systick_csr_set(uint32_t val)
 {
     SysTick->CTRL = val;
 }
 
-NRF_STATIC_INLINE uint32_t nrf_systick_load_get(void)
+__STATIC_INLINE uint32_t nrf_systick_load_get(void)
 {
     return SysTick->LOAD;
 }
 
-NRF_STATIC_INLINE void nrf_systick_load_set(uint32_t val)
+__STATIC_INLINE void nrf_systick_load_set(uint32_t val)
 {
     SysTick->LOAD = val;
 }
 
-NRF_STATIC_INLINE uint32_t nrf_systick_val_get(void)
+__STATIC_INLINE uint32_t nrf_systick_val_get(void)
 {
     return SysTick->VAL;
 }
 
-NRF_STATIC_INLINE void nrf_systick_val_clear(void)
+__STATIC_INLINE void nrf_systick_val_clear(void)
 {
     SysTick->VAL = 0;
 }
 
-NRF_STATIC_INLINE uint32_t nrf_systick_calib_get(void)
+__STATIC_INLINE uint32_t nrf_systick_calib_get(void)
 {
     return SysTick->CALIB;
 }
 
-#endif /* NRF_DECLARE_ONLY */
+#endif /* SUPPRESS_INLINE_IMPLEMENTATION */
 
 /** @} */
 

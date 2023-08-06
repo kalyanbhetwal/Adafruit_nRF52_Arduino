@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 - 2020, Nordic Semiconductor ASA
+ * Copyright (c) 2018 - 2019, Nordic Semiconductor ASA
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -66,11 +66,11 @@ typedef enum
  * @param[in] size      Size of region to protect in bytes.
  * @param[in] perm      Permissions to set for region to protect.
  */
-NRF_STATIC_INLINE void nrf_acl_region_set(NRF_ACL_Type * p_reg,
-                                          uint32_t       region_id,
-                                          uint32_t       address,
-                                          size_t         size,
-                                          nrf_acl_perm_t perm);
+__STATIC_INLINE void nrf_acl_region_set(NRF_ACL_Type * p_reg,
+                                        uint32_t       region_id,
+                                        uint32_t       address,
+                                        size_t         size,
+                                        nrf_acl_perm_t perm);
 
 /**
  * @brief Function for getting the configured region address of a specific ACL region.
@@ -80,8 +80,7 @@ NRF_STATIC_INLINE void nrf_acl_region_set(NRF_ACL_Type * p_reg,
  *
  * @return Configured region address of given ACL region.
  */
-NRF_STATIC_INLINE uint32_t nrf_acl_region_address_get(NRF_ACL_Type const * p_reg,
-                                                      uint32_t             region_id);
+__STATIC_INLINE uint32_t nrf_acl_region_address_get(NRF_ACL_Type * p_reg, uint32_t region_id);
 
 /**
  * @brief Function for getting the configured region size of a specific ACL region.
@@ -91,7 +90,7 @@ NRF_STATIC_INLINE uint32_t nrf_acl_region_address_get(NRF_ACL_Type const * p_reg
  *
  * @return Configured region size of given ACL region.
  */
-NRF_STATIC_INLINE size_t nrf_acl_region_size_get(NRF_ACL_Type const * p_reg, uint32_t region_id);
+__STATIC_INLINE size_t nrf_acl_region_size_get(NRF_ACL_Type * p_reg, uint32_t region_id);
 
 /**
  * @brief Function for getting the configured region permissions of a specific ACL region.
@@ -101,16 +100,15 @@ NRF_STATIC_INLINE size_t nrf_acl_region_size_get(NRF_ACL_Type const * p_reg, uin
  *
  * @return Configured region permissions of given ACL region.
  */
-NRF_STATIC_INLINE nrf_acl_perm_t nrf_acl_region_perm_get(NRF_ACL_Type const * p_reg,
-                                                         uint32_t             region_id);
+__STATIC_INLINE nrf_acl_perm_t nrf_acl_region_perm_get(NRF_ACL_Type * p_reg, uint32_t region_id);
 
-#ifndef NRF_DECLARE_ONLY
+#ifndef SUPPRESS_INLINE_IMPLEMENTATION
 
-NRF_STATIC_INLINE void nrf_acl_region_set(NRF_ACL_Type * p_reg,
-                                          uint32_t       region_id,
-                                          uint32_t       address,
-                                          size_t         size,
-                                          nrf_acl_perm_t perm)
+__STATIC_INLINE void nrf_acl_region_set(NRF_ACL_Type * p_reg,
+                                        uint32_t       region_id,
+                                        uint32_t       address,
+                                        size_t         size,
+                                        nrf_acl_perm_t perm)
 {
     NRFX_ASSERT(region_id < ACL_REGIONS_COUNT);
     NRFX_ASSERT(address % NRF_FICR->CODEPAGESIZE == 0);
@@ -122,24 +120,22 @@ NRF_STATIC_INLINE void nrf_acl_region_set(NRF_ACL_Type * p_reg,
     p_reg->ACL[region_id].PERM = perm;
 }
 
-NRF_STATIC_INLINE uint32_t nrf_acl_region_address_get(NRF_ACL_Type const * p_reg,
-                                                      uint32_t             region_id)
+__STATIC_INLINE uint32_t nrf_acl_region_address_get(NRF_ACL_Type * p_reg, uint32_t region_id)
 {
     return (uint32_t)p_reg->ACL[region_id].ADDR;
 }
 
-NRF_STATIC_INLINE size_t nrf_acl_region_size_get(NRF_ACL_Type const * p_reg, uint32_t region_id)
+__STATIC_INLINE size_t nrf_acl_region_size_get(NRF_ACL_Type * p_reg, uint32_t region_id)
 {
     return (size_t)p_reg->ACL[region_id].SIZE;
 }
 
-NRF_STATIC_INLINE nrf_acl_perm_t nrf_acl_region_perm_get(NRF_ACL_Type const * p_reg,
-                                                         uint32_t             region_id)
+__STATIC_INLINE nrf_acl_perm_t nrf_acl_region_perm_get(NRF_ACL_Type * p_reg, uint32_t region_id)
 {
     return (nrf_acl_perm_t)p_reg->ACL[region_id].PERM;
 }
 
-#endif // NRF_DECLARE_ONLY
+#endif // SUPPRESS_INLINE_IMPLEMENTATION
 
 /** @} */
 

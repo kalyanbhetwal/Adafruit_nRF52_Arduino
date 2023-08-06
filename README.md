@@ -1,10 +1,4 @@
 # Arduino Core for Adafruit Bluefruit nRF52 Boards
-<<<<<<< HEAD
-=======
-## Issues:
-1. https://forum.arduino.cc/t/upgrading-issue-runtimeerror-click-will-abort-further-execution-because-python-3-was-configured-to-use-ascii-as-encoding-for-the-environment/1078618
-2. https://forums.adafruit.com/viewtopic.php?t=168759 (fix for the issue 1)
->>>>>>> 6f09201c83e274b6521382ff88702cc739d69a98
 
 [![Build Status](https://github.com/adafruit/Adafruit_nRF52_Arduino/workflows/Build/badge.svg)](https://github.com/adafruit/Adafruit_nRF52_Arduino/actions)
 
@@ -22,7 +16,6 @@ Following boards are also included but are not officially supported:
 
 - [Nordic nRF52840DK PCA10056](https://www.nordicsemi.com/Software-and-Tools/Development-Kits/nRF52840-DK)
 - [Particle Xenon](https://store.particle.io/products/xenon)
-- [Raytac MDBT50Q-RX Dongle](https://www.raytac.com/product/ins.php?index_id=89)
 
 ## BSP Installation
 
@@ -56,7 +49,7 @@ There are two methods that you can use to install this BSP. We highly recommend 
 
 ### Adafruit's nrfutil tools
 
-[adafruit-nrfutil](https://github.com/adafruit/Adafruit_nRF52_nrfutil) (derived from Nordic [pc-nrfutil](https://github.com/NordicSemiconductor/pc-nrfutil)) is needed to upload sketch via serial port.
+[adafruit-nrfutil](https://github.com/adafruit/Adafruit_nRF52_nrfutil) (derived from Nordic pc-nrfutil) is needed to upload sketch via serial port.
 
 - For Windows and macOS, pre-built executable binaries are included in the BSP at `tools/adafruit-nrfutil/`. It should work out of the box.
 - Linux user need to run follow command to install it from PyPi
@@ -124,7 +117,8 @@ which in turn is based on the [Arduino SAMD Core](https://github.com/arduino/Ard
 
 The following libraries are used:
 
-- [FreeRTOS](https://www.freertos.org/) as operating system
-- [LittleFS](https://github.com/ARMmbed/littlefs) for internal file system
+- adafruit-nrfutil is based on Nordic Semiconductor ASA's [pc-nrfutil](https://github.com/NordicSemiconductor/pc-nrfutil)
+- [freeRTOS](https://www.freertos.org/) as operating system
+- [tinyusb](https://github.com/hathach/tinyusb) as usb stack
 - [nrfx](https://github.com/NordicSemiconductor/nrfx) for peripherals driver
-- [TinyUSB](https://github.com/hathach/tinyusb) as usb stack
+- [littlefs](https://github.com/ARMmbed/littlefs) for internal file system
